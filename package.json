@@ -41,6 +41,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@use-gesture/vanilla": "^10.2.4"
+    "@use-gesture/vanilla": "^10.2.4",
+    "axios": "^0.24.0",
+    "typedjson": "^1.8.0"
   }
 }
