@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { convertToType, convertToDataJson } from '$libs/data-convert';
 	import 'carbon-components-svelte/css/all.css';
 
 	import { page } from '$app/stores';
@@ -27,7 +28,19 @@
 
 	// event function
 	const longPress = () => (isSelecting = true);
-  
+
+	///ITaskNode
+	const json = `
+  {
+    "id" : "0000-00-0009",
+    "project-id" : "000-1234-1234",
+    "title" : "test" ,
+    "start-time" : "2022-01-13T01:44:52",
+    "end-time" : "2022-01-03T01:45:34"
+  }
+  `;
+	const testAS = convertToType<ITaskNode>(JSON.parse(json));
+	console.log(testAS);
 </script>
 
 <svelte:head>

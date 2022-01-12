@@ -1,22 +1,23 @@
 import axios from 'axios';
 import { jsonObject, jsonMember, TypedJSON } from 'typedjson';
-import luxon, { DateTime } from 'luxon';
-// https://github.com/JohnWeisz/TypedJSON
+import type { DateTime } from 'luxon';
 
-@jsonObject
-export class FetchPostRequest {
-  @jsonMember({
-    name: 'start-date',
-    deserializer: value => DateTime.fromISO(value),
-    serializer: timestamp => timestamp.format()
-  })
+export interface IFetchPostRequest {
   StartDate?: DateTime;
-
-  
   EndDate?: DateTime;
-
 }
 
-export const FetchPost = async () => {
-  return {};
+export const FetchPost = async (reqParam: IFetchPostRequest) => {
+  try {
+    const data = {}
+    const config = { headers: { 'Content-Type': 'application/json' } };
+    const resp = await axios.post('', data, config);
+
+    // return resp.data ? FetchPostRequestParser.parse(resp.data) : {};
+    return resp.data;
+  } catch (err) {
+    console.warn('err in FetchPost');
+    console.warn(err);
+    return null;
+  }
 }

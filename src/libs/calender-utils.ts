@@ -4,11 +4,11 @@ import { DateTime, Duration } from "luxon";
 // import type { IWeekRow } from './week';
 
 export interface ITaskNode {
-  id: string,
-  project_id: string,
-  title: string,
-  startTime: DateTime,
-  endTime: DateTime,
+  Id: string,
+  ProjectId: string,
+  Title: string,
+  StartTime: DateTime,
+  EndTime: DateTime,
 }
 
 export interface IDayCellItem {
@@ -53,8 +53,8 @@ export const generateWeekRowObj = (
     // console.log(genDay.toISO())
 
     const events: Array<ITaskNode> = taskList.filter((task: ITaskNode) =>
-      task.startTime.valueOf() <= genDay.valueOf() &&
-      task.endTime.valueOf() >= genDay.valueOf()
+      task.StartTime.valueOf() <= genDay.valueOf() &&
+      task.EndTime.valueOf() >= genDay.valueOf()
     );
     const DayCell: IDayCellItem = {
       isSelected: false,
