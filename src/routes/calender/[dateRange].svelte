@@ -16,6 +16,7 @@
 	let startDate: DateTime = DateTime.now().startOf('month');
 	let endDate: DateTime = DateTime.now().endOf('month');
 	let dateParse: string[] = [];
+	console.log($page.params.dateRange);
 	if ($page.params.dateRange) {
 		dateParse = /(.*)\:(.*)/g.exec($page.params.dateRange);
 		startDate = !!dateParse && !!dateParse[1] ? DateTime.fromISO(dateParse[1]) : startDate;
@@ -29,18 +30,6 @@
 	// event function
 	const longPress = () => (isSelecting = true);
 
-	///ITaskNode
-	const json = `
-  {
-    "id" : "0000-00-0009",
-    "project-id" : "000-1234-1234",
-    "title" : "test" ,
-    "start-time" : "2022-01-13T01:44:52",
-    "end-time" : "2022-01-03T01:45:34"
-  }
-  `;
-	const testAS = convertToType<ITaskNode>(JSON.parse(json));
-	console.log(testAS);
 </script>
 
 <svelte:head>
