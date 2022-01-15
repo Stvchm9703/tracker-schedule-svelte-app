@@ -1,5 +1,6 @@
 import { pascal, kebab } from 'case';
 import { DateTime } from 'luxon';
+import d from 'typescript-is';
 
 export function convertToType<T>(income: any): T {
   const income_field = Object.keys(income);
@@ -9,7 +10,7 @@ export function convertToType<T>(income: any): T {
   try {
     for (const key of income_field) {
       // todo : date handler
-      if ( /[\d]+-[\d]+-[\d]+T[\d]+:[\d]+:[\d]+/gi.test(income[key]) ) {
+      if (/[\d]+-[\d]+-[\d]+T[\d]+:[\d]+:[\d]+/gi.test(income[key])) {
         converted[pascal(key)] = DateTime.fromISO(income[key]);
       } else {
         converted[pascal(key)] = income[key];

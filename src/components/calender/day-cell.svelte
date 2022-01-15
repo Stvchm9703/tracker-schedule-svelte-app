@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { Tile, SelectableTile } from 'carbon-components-svelte';
+	import { Tile, SelectableTile, Tooltip } from 'carbon-components-svelte';
 	import { DateTime } from 'luxon';
 	import { createEventDispatcher } from 'svelte';
+
 	// import { fromString } from 'uuidv4';
-	import longpress from '$utils/long-press';
+	import longpress from '$actions/long-press';
 
 	const dispatch = createEventDispatcher();
 	// props
@@ -11,7 +12,7 @@
 	export let events: Array<any> = [];
 	export let isSelecting: boolean = false;
 	export let isSelected: boolean = false;
-	export let dataWeekday: number = 0;
+	// export let dataWeekday: number = 0;
 
 	// data
 
@@ -34,11 +35,24 @@
 >
 	{#if !isSelecting}
 		<Tile class={`day-tile ${!isCurrentMonth ? 'not-in-month' : ''}`}>
-			<span class="day-label" class:is-today={isToday}>{date.day}</span>
-			<div class="event-list">
-				{#each events as event}
-					<span class="event-item">{event}</span>
+			<Tooltip
+				hideIcon
+				triggerText={`${date.day}`}
+				class={`day-label ${isToday ? 'is-today' : ''}`}
+				align="start"
+				direction="top"
+			>
+				<span class="text">{date.toISODate()}</span>
+			</Tooltip>
+			<div class="task-list">
+				{#each events.slice(0, 4) as event}
+					<span class="task-item" />
 				{/each}
+				{#if events.length > 4}
+					<span class="task-more-item">
+						more+ {events.length - 4}
+					</span>
+				{/if}
 			</div>
 		</Tile>
 	{:else}
@@ -47,11 +61,25 @@
 			value={date.toISODate()}
 			selected={isSelected}
 		>
-			<span class="day-label" class:is-today={isToday}>{date.day}</span>
-			<div class="event-list">
-				{#each events as event}
-					<span class="event-item">{event}</span>
+			<!-- <span class="day-label" class:is-today={isToday}>{date.day}</span> -->
+			<Tooltip
+				hideIcon
+				triggerText={`${date.day}`}
+				class={`day-label ${isToday ? 'is-today' : ''}`}
+				align="start"
+				direction="top"
+			>
+				<span class="text">{date.toISODate()}</span>
+			</Tooltip>
+			<div class="task-list">
+				{#each events.slice(0, 4) as event}
+					<span class="task-item" />
 				{/each}
+				{#if events.length > 4}
+					<span class="task-more-item">
+						more+ {events.length - 4}
+					</span>
+				{/if}
 			</div>
 		</SelectableTile>
 	{/if}
@@ -78,7 +106,10 @@
 
 				&.is-today {
 					background-color: $blue-60-hover;
-					color: $cool-gray-10;
+					// color: $white-0;
+					// .text {
+					// 	color: $white-0;
+					// }
 				}
 			}
 		}
@@ -94,7 +125,7 @@
 		@media screen and(max-width:640px) {
 			&.is-today {
 				background-color: $blue-60;
-				color: $white-0;
+				// color: $white-0;
 			}
 		}
 
@@ -128,9 +159,72 @@
 			line-height: 2.5rem;
 		}
 
-		&.is_today {
+		&.is-today {
 			background-color: $blue-60;
 			color: $white-0;
+			.text {
+				color: $white-0;
+			}
+      .bx--tooltip__label{
+        color: $white-0;
+      }
+		}
+		.bx--tooltip {
+			padding: 0.5rem;
+		}
+		.bx--tooltip__label {
+			width: 100%;
+			width: 2rem;
+			height: 2rem;
+			line-height: 2rem;
+			text-align: center;
+			justify-content: center;
+		}
+		.text {
+			width: 100%;
+			text-align: center;
+		}
+	}
+
+	.task-list {
+		display: flex;
+		flex-wrap: wrap;
+		position: relative;
+		top: -1.8rem;
+
+		@media screen and (max-width: 66rem) {
+			display: none;
+		}
+	}
+
+	.task-item {
+		display: block;
+		background-color: $cool-gray-70;
+		height: 1rem;
+		width: 1rem;
+		transform: rotateZ(45deg);
+		margin: 0.4rem -0.2rem;
+		cursor: pointer;
+
+		&:hover {
+			background-color: $blue-70-hover;
+		}
+
+		&:first-of-type {
+			margin-left: 1.4rem;
+		}
+	}
+
+	.task-more-item {
+		padding: 0.3rem 0.5rem;
+		margin-left: 0.35rem;
+		margin-top: -0.1rem;
+		line-height: 1.4rem;
+		cursor: pointer;
+
+		&:hover {
+			color: $blue-70-hover;
+			background-color: $cool-gray-20-hover;
 		}
 	}
 </style>

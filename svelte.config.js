@@ -8,7 +8,7 @@ const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
 	// preprocess: preprocess(),
-	preprocess:[  preprocess()],
+	preprocess: [preprocess()],
 	css: (css) => css.write('public/bundle.css'),
 
 	kit: {
@@ -28,7 +28,8 @@ const config = {
 					$components: path.resolve('src/components'),
 					$utils: path.resolve('src/utils'),
 					$libs: path.resolve('src/libs'),
-					$stores: path.resolve('src/stores')
+					$stores: path.resolve('src/stores'),
+					$actions: path.resolve('src/actions')
 				}
 			}
 		}

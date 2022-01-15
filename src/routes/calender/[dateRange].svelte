@@ -9,10 +9,9 @@
 	import { generateWeekRowObj, IWeekRow, IDayCellItem, ITaskNode } from '$libs/calender-utils';
 
 	/// components
-	import DayCell from '$components/calender/day-cell.svelte';
+	import Calender from '$components/calender/calender.svelte';
 	/// client-side
 	console.log($page);
-	let dayRangeArray: Array<IWeekRow> = [];
 	let startDate: DateTime = DateTime.now().startOf('month');
 	let endDate: DateTime = DateTime.now().endOf('month');
 	let dateParse: string[] = [];
@@ -22,14 +21,22 @@
 		startDate = !!dateParse && !!dateParse[1] ? DateTime.fromISO(dateParse[1]) : startDate;
 		endDate = !!dateParse && !!dateParse[2] ? DateTime.fromISO(dateParse[2]) : endDate;
 	}
-
-	dayRangeArray = generateWeekRowObj(DateTime.now(), startDate, endDate, []);
-	// console.log({ dayRangeArray });
-	let isSelecting: boolean = false;
-
-	// event function
-	const longPress = () => (isSelecting = true);
-
+	let taskList: Array<ITaskNode> = Array.from(Array(20).keys()).map(
+		(elem) =>
+			({
+				Id: elem + '-',
+				ProjectId: 'sample',
+				Title: `sample-${elem}`,
+				StartTime: DateTime.now().minus({
+					hour: Math.random() * elem,
+					day: Math.random() * elem
+				}),
+				EndTime: DateTime.now().plus({
+					hour: Math.random() * elem,
+					day: Math.random() * elem
+				})
+			} as ITaskNode)
+	);
 </script>
 
 <svelte:head>
@@ -41,19 +48,8 @@
 		props: {JSON.stringify($page.params)}
 	</Row>
 	<!-- <Grid class="calender-grid"> -->
-	{#each dayRangeArray as weekRow}
-		<Row class="week-row">
-			<span class="weekday-label">{weekRow[0].date.weekNumber} </span>
-			{#each weekRow as dayCellItem}
-				<DayCell
-					{...dayCellItem}
-					{isSelecting}
-					dataWeekday={dayCellItem.date.weekday}
-					on:day-longPress={longPress}
-				/>
-			{/each}
-		</Row>
-	{/each}
+	<Calender {startDate} {endDate} {taskList} />
+
 	<!-- </Grid> -->
 </section>
 

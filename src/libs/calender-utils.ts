@@ -1,4 +1,4 @@
-import { DateTime, Duration } from "luxon";
+import type { DateTime, Duration } from "luxon";
 // import DayCellColumn, { IDayCellItem, IDayCellEvent } from './day';
 // import type { ITaskNode, ITaskEvent } from './event';
 // import type { IWeekRow } from './week';
@@ -26,8 +26,6 @@ export const generateWeekRowObj = (
   startDate: DateTime, endDate: DateTime,
   taskList: Array<ITaskNode>,
 ): Array<IWeekRow> => {
-  const today: DateTime = DateTime.now();
-  const currentDate: DateTime = inViewDate;
   const weekRowArr: Array<IWeekRow> = [];
 
   let canlender_startDate = startDate;
@@ -42,7 +40,6 @@ export const generateWeekRowObj = (
     canlender_endDate = canlender_endDate.plus({
       days: 7 - endDate.weekday
     });
-    console.log(canlender_endDate.toISODate());
   }
   const daydiff: Duration = canlender_endDate.diff(canlender_startDate, 'days');
 
@@ -56,6 +53,7 @@ export const generateWeekRowObj = (
       task.StartTime.valueOf() <= genDay.valueOf() &&
       task.EndTime.valueOf() >= genDay.valueOf()
     );
+    // console.log(events)
     const DayCell: IDayCellItem = {
       isSelected: false,
       date: genDay,
@@ -63,7 +61,7 @@ export const generateWeekRowObj = (
     }
     gened.push(DayCell);
     // console.log(gened);
-    if (DayCell.date.weekday === 7 ) {
+    if (DayCell.date.weekday === 7) {
       weekRowArr.push(gened as IWeekRow);
       gened = [];
     }
