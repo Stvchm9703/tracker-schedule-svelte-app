@@ -46,7 +46,10 @@
 			</Tooltip>
 			<div class="task-list">
 				{#each events.slice(0, 4) as event}
-					<span class="task-item" />
+					<span class="task-item">
+						<span class="task-node" />
+						<span class="task-text">{event.Title}</span>
+					</span>
 				{/each}
 				{#if events.length > 4}
 					<span class="task-more-item">
@@ -73,7 +76,10 @@
 			</Tooltip>
 			<div class="task-list">
 				{#each events.slice(0, 4) as event}
-					<span class="task-item" />
+					<span class="task-item">
+						<span class="task-node" />
+						<span class="task-text">{event.Title}</span>
+					</span>
 				{/each}
 				{#if events.length > 4}
 					<span class="task-more-item">
@@ -165,9 +171,9 @@
 			.text {
 				color: $white-0;
 			}
-      .bx--tooltip__label{
-        color: $white-0;
-      }
+			.bx--tooltip__label {
+				color: $white-0;
+			}
 		}
 		.bx--tooltip {
 			padding: 0.5rem;
@@ -199,19 +205,40 @@
 
 	.task-item {
 		display: block;
-		background-color: $cool-gray-70;
-		height: 1rem;
-		width: 1rem;
-		transform: rotateZ(45deg);
 		margin: 0.4rem -0.2rem;
 		cursor: pointer;
-
 		&:hover {
-			background-color: $blue-70-hover;
+			.task-node {
+				background-color: $blue-70-hover;
+			}
+			.task-text {
+				visibility: visible;
+			}
 		}
 
 		&:first-of-type {
 			margin-left: 1.4rem;
+		}
+		.task-node {
+			display: block;
+			background-color: $cool-gray-70;
+			height: 1rem;
+			width: 1rem;
+			transform: rotateZ(45deg);
+		}
+
+		.task-text {
+			visibility: hidden;
+			width: 120px;
+			background-color: black;
+			color: #fff;
+			text-align: center;
+			padding: 5px 0;
+			border-radius: 6px;
+			position: absolute;
+			z-index: 1;
+			bottom: -25px;
+			left: 20px;
 		}
 	}
 
