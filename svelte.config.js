@@ -15,12 +15,11 @@ const config = {
 		adapter: adapter({
 			page: 'build',
 			assets: 'build',
-			fallback: '200.html'
+			// fallback: '200.html'
 		}),
 
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
-
 		vite: {
 			resolve: {
 				alias: {
